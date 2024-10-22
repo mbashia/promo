@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>/* Basic promo input and button styling from before remains unchanged */
+     .promo-code-container {
+  position: relative; /* To keep confetti within this container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+  max-width: 400px;
+}
+
+#promo-code-input {
+  padding: 10px;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: border 0.3s ease;
+}
+
+#apply-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#apply-button:hover {
+  background-color: #0056b3;
+}
+
+/* Status message styling */
+.status-message {
+  margin-top: 15px;
+  opacity: 0;
+  font-size: 14px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.success {
+  border: 2px solid green;
+}
+
+.error {
+  border: 2px solid red;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(10px);
+}
+
+/* Confetti container limited to the promo-code area */
+.confetti-limited-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; /* Height to limit where the confetti falls */
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Discount message */
+#discount-message {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: green;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+/* Confetti styling for birthday theme - now all rectangles */
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.7);
+  animation: fall 2s linear infinite;
+}
+
+/* Confetti colors */
+.confetti:nth-child(1n) { background-color: #FF69B4; } /* Hot Pink Rectangle */
+.confetti:nth-child(2n) { background-color: #FFD700; } /* Gold Rectangle */
+.confetti:nth-child(3n) { background-color: #32CD32; } /* Lime Green Rectangle */
+.confetti:nth-child(4n) { background-color: #1E90FF; } /* Blue Rectangle */
+.confetti:nth-child(5n) { background-color: #FF4500; } /* Orange Rectangle */
+.confetti:nth-child(6n) { background-color: #BA55D3; } /* Purple Rectangle */
+
+/* Confetti fall animation */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100px) rotate(360deg);
+  }
+}
+
+/* Add slight variations in rotation for each confetti */
+.confetti:nth-child(odd) {
+  animation-duration: 1.5s;
+}
+
+.confetti:nth-child(even) {
+  animation-duration: 2.5s;
+}
+</style>
+    <body>
+
+        <div class="promo-code-container">
+            <input type="text" id="promo-code-input"
+                placeholder="Enter promo code" />
+            <button id="apply-button">Apply</button>
+            <div id="promo-status" class="status-message"></div>
+
+            <!-- Confetti container, limited to the promo-code section -->
+            <div id="confetti-container" class="confetti-limited-area"></div>
+
+            <!-- Discount message display -->
+            <div id="discount-message"></div>
+        </div>
+
+        <script>document.getElementById('apply-button').addEventListener('click', function () {
+            const promoInput = document.getElementById('promo-code-input');
+            const statusMessage = document.getElementById('promo-status');
+            const discountMessage = document.getElementById('discount-message');
+            const promoCode = promoInput.value;
+          
+            // Check if the promo code matches (for simplicity, valid code is "DISCOUNT2024")
+            if (promoCode === "DISCOUNT2024") {
+              promoInput.classList.remove('error');
+              promoInput.classList.add('success');
+              
+              // Show success message
+              statusMessage.textContent = "Promo code applied successfully!";
+              statusMessage.style.color = "green";
+              statusMessage.classList.add('show');
+              
+              // Display discount message
+              discountMessage.textContent = "Congratulations! You get a 20% discount.";
+              discountMessage.style.opacity = 1;
+              
+              // Trigger confetti
+              triggerConfetti();
+              
+            } else {
+              promoInput.classList.remove('success');
+              promoInput.classList.add('error');
+              
+              // Show error message
+              statusMessage.textContent = "Invalid promo code. Please try again.";
+              statusMessage.style.color = "red";
+              statusMessage.classList.add('show');
+              
+              // Hide discount message
+              discountMessage.style.opacity = 0;
+            }
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+              statusMessage.classList.remove('show');
+            }, 3000);
+          });
+          
+          // Confetti effect limited to the promo section
+          function triggerConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+
+  // Confetti creation (100 pieces)
+  for (let i = 0; i < 10; i++) {
+    let confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+    confettiContainer.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();  // Remove after animation to avoid clutter
+    }, 5000); // Confetti lasts for 5 seconds
+  }
+
+ 
+}
+             </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confetti Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Click for Confetti!</h1>
+
+<script>
+    // Confetti function when clicking
+    function launchConfetti() {
+        // Basic confetti options
+        confetti({
+            particleCount: 100, // Number of confetti pieces
+            spread: 70, // Spread of the confetti
+            origin: { y: 0.6 } // Origin of the confetti
+        });
+    }
+
+    // Event listener for click
+    document.body.addEventListener('click', launchConfetti);
+</script>
+
+</body>
+</html>
